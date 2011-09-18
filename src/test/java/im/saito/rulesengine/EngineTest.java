@@ -22,7 +22,7 @@ public class EngineTest extends TestCase{
 		Rule rule1 = new Rule("rule1")
 				.condition("color.equals(\"red\")")
 				.action("System.out.println(\"color is \" + color); color = \"blue\"; System.out.println(\"change color to \" + color)")
-				.priority(1);
+				.priority(2);
 		
 		Rule rule2 = new Rule("rule2")
 				.condition("color.equals(\"blue\")")
@@ -31,7 +31,7 @@ public class EngineTest extends TestCase{
 		Rule rule3 = new Rule("rule3")
 				.condition("color.equals(\"red\")")
 				.action("System.out.println(\"color is \" + color); color = \"yellow\"; System.out.println(\"change color to \" + color)")
-				.priority(2);
+				.priority(1);
 		
 		rulebook.addRules(rule1, rule2, rule3);
 		
@@ -47,6 +47,13 @@ public class EngineTest extends TestCase{
 	public void testRunWithPriority(){
 		Engine engine = new Engine(rulebook);
 		facts.put("color", "red");
+		engine.run(facts);
+	}
+	
+	public void testRunWithRecursive(){
+		Engine engine = new Engine(rulebook);
+		engine.recursive = true;
+		facts.put("color", "blue");
 		engine.run(facts);
 	}
 	

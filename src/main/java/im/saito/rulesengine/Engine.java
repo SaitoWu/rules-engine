@@ -23,8 +23,18 @@ public class Engine {
 	}
 	
 	public void run(Map<String, Object> facts){
-		
+		if (recursive) {
+			do {
+				this.agenda.clear();
+				run0(facts);
+			} while (this.agenda.size() != 0);
+		}else {
+			run0(facts);
+		}
 
+	}
+	
+	private void run0(Map<String, Object> facts){
 		for (Rule rule : rulebook.rules) {
 			if (rule.judge(rule.condition, facts)) {
 				agenda.add(rule);
@@ -37,5 +47,4 @@ public class Engine {
 			rule.implement(rule.action, facts);
 		}
 	}
-	
 }
